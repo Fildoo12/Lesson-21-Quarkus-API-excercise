@@ -3,6 +3,7 @@ package cz.spsmb.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "test-person-table")
@@ -13,6 +14,11 @@ public class Person implements Serializable {
     long id;
     String name;
     int age;
+
+    @OneToMany(mappedBy = "person")
+    List<Car> car;
+    @OneToMany(mappedBy = "person")
+    List<Animal> animal;
 
     public Person(){};
 
