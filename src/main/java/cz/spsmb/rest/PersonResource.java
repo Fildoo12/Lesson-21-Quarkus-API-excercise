@@ -1,6 +1,5 @@
 package cz.spsmb.rest;
 
-import cz.spsmb.dto.PersonDTO;
 import cz.spsmb.model.Person;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -10,7 +9,6 @@ import jakarta.ws.rs.core.Response;
 import cz.spsmb.dao.PersonRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Path("/persons")
 public class PersonResource {
@@ -45,23 +43,19 @@ public class PersonResource {
         return Response.ok().entity("ok").build();
     }
 
-    @Transactional
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(PersonDTO personDTO){
-        if (validateInput(personDTO)){
-            Person person = new Person();
-            person.setName(personDTO.getName());
-            person.setAge(personDTO.getAge());
-
+    @Transactional
+    public Response save(Person person) {
+        person.setId(0l);
+        if (person.getMajitel() != null && person.getAge() > 0) {
             personRepository.persist(person);
             return Response.ok().entity("ok").build();
+        } else {
+            return Response.status(400).entity("Person must have attributes \"majitel\" and \"age\".").build();
         }
-        return Response.status(400).entity("Invalid input").build();
-    }
-    private boolean validateInput(PersonDTO personDTO){
-        return !(personDTO.getName().isEmpty());
+
     }
 
 

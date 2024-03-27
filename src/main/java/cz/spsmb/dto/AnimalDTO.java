@@ -1,19 +1,12 @@
 package cz.spsmb.dto;
 
+import java.util.List;
+
 public class AnimalDTO {
-    long id;
     String name;
-    String Kind;
-    String Breed;
-    int BornDate;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    Integer age;
+    List<String> category;
+    String majitel;
 
     public String getName() {
         return name;
@@ -23,51 +16,37 @@ public class AnimalDTO {
         this.name = name;
     }
 
-    public String getKind() {
-        return Kind;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setKind(String kind) {
-        Kind = kind;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public String getBreed() {
-        return Breed;
+    public List<String> getCategory() {
+        return category;
     }
 
-    public void setBreed(String breed) {
-        Breed = breed;
+    public void setCategory(List<String> category) {
+        this.category = category;
     }
 
-    public int getBornDate() {
-        return BornDate;
+    public String getMajitel() {
+        return majitel;
     }
 
+    public void setMajitel(String majitel) {
+        this.majitel = majitel;
+    }
 
     @Override
     public String toString() {
         return "AnimalDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", Kind='" + Kind + '\'' +
-                ", Breed='" + Breed + '\'' +
-                ", BornDate=" + BornDate +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", category=" + category +
+                ", majitel='" + majitel + '\'' +
                 '}';
-    }
-
-    public int setBornDate() {
-        return this.BornDate;
-    }
-
-    public String setKind() {
-        return this.Kind;
-    }
-
-    public String setBreed() {
-        return this.Breed;
-    }
-
-    public String setName() {
-        return this.name;
     }
 }

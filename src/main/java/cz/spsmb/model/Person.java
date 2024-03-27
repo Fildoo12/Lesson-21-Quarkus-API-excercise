@@ -10,20 +10,17 @@ import java.util.List;
 public class Person implements Serializable {
 
     @Id
+    @Column(name = "person")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-    String name;
+    String majitel;
     int age;
 
-    @OneToMany(mappedBy = "person")
-    List<Car> car;
-    @OneToMany(mappedBy = "person")
-    List<Animal> animal;
 
     public Person(){};
 
-    public Person(String name, Integer age){
-        this.name = name;
+    public Person(String majitel, int age) {
+        this.majitel = majitel;
         this.age = age;
     }
 
@@ -35,12 +32,12 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMajitel() {
+        return majitel;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMajitel(String majitel) {
+        this.majitel = majitel;
     }
 
     public int getAge() {
@@ -54,9 +51,20 @@ public class Person implements Serializable {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "majitel='" + majitel + '\'' +
                 ", age=" + age +
+                ", animal=" + animal +
                 '}';
+    }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    Animal animal;
+
+    public Animal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 }

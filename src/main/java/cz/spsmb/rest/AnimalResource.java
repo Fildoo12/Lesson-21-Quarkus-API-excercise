@@ -2,14 +2,14 @@ package cz.spsmb.rest;
 
 import cz.spsmb.dao.AnimalRepository;
 import cz.spsmb.dto.AnimalDTO;
-import cz.spsmb.dto.PersonDTO;
 import cz.spsmb.model.Animal;
-import cz.spsmb.model.Person;
+import cz.spsmb.model.Category;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.List;
 
@@ -46,26 +46,26 @@ public class AnimalResource {
         return Response.ok().entity("ok").build();
     }
 
-    @Transactional
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(AnimalDTO animalDTO){
-        if (validateInput(animalDTO)){
+    @Transactional
+    public Response save(AnimalDTO animalDTO) {
+        if (animalDTO.getName() != null && animalDTO.getAge() > 0) {
             Animal animal = new Animal();
-            animal.setName(animalDTO.setName());
-            animal.setBreed(animalDTO.getBreed());
-            animal.setKind(animalDTO.getKind());
-            animal.setBornDate(animalDTO.getBornDate());
-
+            animal.setName(animalDTO.getName());
+            animal.setAge(animalDTO.getAge());
+            for (String category: animalDTO.getCategory()){
+                Category cat = new Category(category);
+                cat.setAnimal(animal);
+                animal.getCategoryList().add(cat);
+            }
             animalRepository.persist(animal);
             return Response.ok().entity("ok").build();
+        } else {
+            return Response.status(400).entity("Animal must have attributes \"name\" and \"age\".").build();
         }
-        return Response.status(400).entity("Invalid input").build();
-    }
-    private boolean validateInput(AnimalDTO animalDTO){
-        return !(animalDTO.getName().isEmpty());
-    }
 
+    }
 
 }

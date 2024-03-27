@@ -3,32 +3,28 @@ package cz.spsmb.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "test-animal-table")
 public class Animal implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "animal_id")
     long id;
     String name;
-    String Kind;
-    String Breed;
-    int BornDate;
+    int age;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
-    Person person;
 
+    @OneToMany(mappedBy = "animal" , cascade = CascadeType.ALL )
+    List<Category> categoryList = new ArrayList<>();
     public Animal(){};
 
-    public Animal(long id, String name, String kind, String breed, Integer bornDate) {
-        this.id = id;
+    public Animal(String name, int age) {
         this.name = name;
-        this.Kind = kind;
-        this.Breed = breed;
-        this.BornDate = bornDate;
+        this.age = age;
     }
 
     public long getId() {
@@ -47,28 +43,20 @@ public class Animal implements Serializable {
         this.name = name;
     }
 
-    public String getKind() {
-        return Kind;
+    public int getAge() {
+        return age;
     }
 
-    public void setKind(String kind) {
-        this.Kind = kind;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public String getBreed() {
-        return Breed;
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
-    public void setBreed(String breed) {
-        this.Breed = breed;
-    }
-
-    public int getBornDate() {
-        return BornDate;
-    }
-
-    public void setBornDate(int bornDate) {
-        this.BornDate = bornDate;
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 
     @Override
@@ -76,9 +64,8 @@ public class Animal implements Serializable {
         return "Animal{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", Kind='" + Kind + '\'' +
-                ", Breed='" + Breed + '\'' +
-                ", BornDate=" + BornDate +
+                ", age=" + age +
+                ", categoryList=" + categoryList +
                 '}';
     }
 }

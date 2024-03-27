@@ -3,21 +3,35 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-
->
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>Home page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous"></link>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></link>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </h:head>
 <h:body>
     <h:form>
-        <h1>It works :-)</h1>
+
+        <h2>Name</h2>
+        <p:inputText id="input-category" value="#{animalView.newAnimal.name}"/>
+        <h2>Age</h2>
+        <p:inputNumber id="input-age" value="#{animalView.newAnimal.age}"/>
+
+
+
+
+
+
+        <p:commandButton value="Save" action="#{animalView.saveAnimal}" update="@form"></p:commandButton>
     </h:form>
+
+    <h1>Animal List</h1>
+
+    <p:dataList value="#{animalView.animalList}" var="animal" type="ordered">
+        Name: #{animal.name}
+        Age: #{animal.age}
+        Id: #{animal.id}
+    </p:dataList>
+
 </h:body>
 </html>
